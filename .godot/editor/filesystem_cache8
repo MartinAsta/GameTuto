@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1720532869
+icon.svg::CompressedTexture2D::4082883341261648362::1720531545::1720531563::1::::<><>::
+::res://levels/::1720532672
+level.tscn::PackedScene::1265731322558735696::1720532672::0::1::::<><>::uid://cjsgebsuvuh0c::::res://tileset/game_tilesets_1.png
+::res://player/::1720533082
+player-idle.png::CompressedTexture2D::8568185302825745506::1720533082::1720533082::1::::<><>::
+player-run.png::CompressedTexture2D::8924897674648197145::1720533082::1720533082::1::::<><>::
+player.tscn::PackedScene::5357112936593547070::1720532900::0::1::::<><>::
+::res://tileset/::1720531998
+game_tilesets_1.png::CompressedTexture2D::5442071286101184096::1720531964::1720531998::1::::<><>::
