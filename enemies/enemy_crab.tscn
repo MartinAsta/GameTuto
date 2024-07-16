@@ -83,6 +83,7 @@ radius = 11.0
 height = 28.0
 
 [node name="EnemyCrab" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_8tk14")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -90,7 +91,7 @@ position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_cdbeo")
 animation = &"walk"
 autoplay = "idle"
-frame_progress = 0.173227
+frame_progress = 0.607781
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -14)

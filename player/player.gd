@@ -4,8 +4,8 @@ extends CharacterBody2D
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var current_state : State
 
-@export var speed : int = 200
-@export var jump : int = -300
+@export var speed : int = 8500
+@export var jump : int = -350
 
 enum State { Idle, Run, Jump }
 
@@ -14,7 +14,7 @@ func _ready():
 
 func _physics_process(delta : float):
 	player_falling(delta)
-	player_run()
+	player_run(delta)
 	player_jump()
 	
 	move_and_slide()
@@ -26,7 +26,7 @@ func player_falling(delta : float):
 	if not is_on_floor():
 		velocity.y += gravity*delta
 
-func player_run():
+func player_run(delta : float):
 	var direction = Input.get_axis("move_left", "move_right")
 	direction = 1 if direction > 0 else floor(direction)
 	
@@ -34,9 +34,9 @@ func player_run():
 		if is_on_floor():
 			current_state = State.Run
 		player_sprite.flip_h = false if direction > 0 else true
-		velocity.x = direction * speed
+		velocity.x = direction * speed * delta
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, 2 * speed * delta)
 		player_idle()
 		
 func player_jump():
