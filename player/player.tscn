@@ -1,9 +1,11 @@
-[gd_scene load_steps=27 format=3 uid="uid://cila4qxtnleda"]
+[gd_scene load_steps=42 format=3 uid="uid://cila4qxtnleda"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_b6g6k"]
 [ext_resource type="Texture2D" uid="uid://ducq03xmmfwr7" path="res://player/player-idle.png" id="1_wsx1f"]
 [ext_resource type="Texture2D" uid="uid://d0fj04o20rn02" path="res://player/player-run.png" id="2_21i6j"]
 [ext_resource type="Texture2D" uid="uid://4wp5taf8j8q6" path="res://player/player-jump.png" id="3_ge48c"]
+[ext_resource type="Texture2D" uid="uid://bj62tjwqwv3et" path="res://player/player-run-shoot.png" id="5_q761m"]
+[ext_resource type="Texture2D" uid="uid://vrcecj3il3t7" path="res://player/player-stand.png" id="6_cj4hg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w7q6i"]
 atlas = ExtResource("1_wsx1f")
@@ -84,6 +86,58 @@ region = Rect2(640, 0, 80, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lqpe8"]
 atlas = ExtResource("2_21i6j")
 region = Rect2(720, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojxrr"]
+atlas = ExtResource("5_q761m")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i66cw"]
+atlas = ExtResource("5_q761m")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dflbe"]
+atlas = ExtResource("5_q761m")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kexg4"]
+atlas = ExtResource("5_q761m")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_102xq"]
+atlas = ExtResource("5_q761m")
+region = Rect2(320, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tivqw"]
+atlas = ExtResource("5_q761m")
+region = Rect2(400, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv0gn"]
+atlas = ExtResource("5_q761m")
+region = Rect2(480, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jo881"]
+atlas = ExtResource("5_q761m")
+region = Rect2(560, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opa8m"]
+atlas = ExtResource("5_q761m")
+region = Rect2(640, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s4ht"]
+atlas = ExtResource("5_q761m")
+region = Rect2(720, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1eev"]
+atlas = ExtResource("6_cj4hg")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yx4p"]
+atlas = ExtResource("6_cj4hg")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aoxvq"]
+atlas = ExtResource("6_cj4hg")
+region = Rect2(160, 0, 80, 80)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0xn60"]
 animations = [{
@@ -169,6 +223,55 @@ animations = [{
 "loop": true,
 "name": &"run",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojxrr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i66cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dflbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kexg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_102xq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tivqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wv0gn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jo881")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opa8m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1s4ht")
+}],
+"loop": true,
+"name": &"run_shoot",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1eev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yx4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aoxvq")
+}],
+"loop": true,
+"name": &"stand_shoot",
+"speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qmtsq"]
@@ -181,12 +284,23 @@ script = ExtResource("1_b6g6k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xn60")
-animation = &"jump"
+animation = &"stand_shoot"
 autoplay = "idle"
-frame = 6
-frame_progress = 1.0
+frame_progress = 0.567471
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -19)
 shape = SubResource("CapsuleShape2D_qmtsq")
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="MuzzleRun" type="Marker2D" parent="."]
+position = Vector2(17, -26)
+
+[node name="MuzzleStand" type="Marker2D" parent="."]
+position = Vector2(18, -27)
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
