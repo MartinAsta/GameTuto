@@ -32,7 +32,6 @@ func _physics_process(delta : float):
 	player_shooting()
 	
 	move_and_slide()
-	print(current_state)
 	player_animations()
 
 #PLAYER MOVEMENTS

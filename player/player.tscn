@@ -286,7 +286,7 @@ script = ExtResource("1_b6g6k")
 sprite_frames = SubResource("SpriteFrames_0xn60")
 animation = &"run_shoot"
 autoplay = "idle"
-frame_progress = 0.908484
+frame_progress = 0.226172
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

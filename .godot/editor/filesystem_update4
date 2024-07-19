@@ -5,3 +5,7 @@ res://player/player.tscn
 res://player/bullet.tscn
 res://player/player.gd
 res://player/bullet.gd
+res://enemies/enemy_crab.tscn
+res://enemies/enemy_crab.gd
+res://player/BulletImpactEffect.gd
+res://player/bullet_impact_effect.tscn

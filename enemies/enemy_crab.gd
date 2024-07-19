@@ -50,7 +50,7 @@ func enemy_walk(delta : float):
 	if !can_walk:
 		return
 	
-	if abs(position.x -current_point.x) > 0.5:
+	if abs(position.x - current_point.x) > 0.5:
 		velocity.x = direction.x * speed * delta
 		current_state = State.Walk
 	else:
@@ -79,3 +79,7 @@ func crab_animation():
 		crab_sprite.play("idle")
 	elif current_state == State.Walk && can_walk:
 		crab_sprite.play("walk")
+
+
+func _on_hurtbox_area_entered(area):
+	print("Hurtbox area entered")

@@ -11,7 +11,7 @@
 [node name="Player" parent="." index="1"]
 position = Vector2(-216, -113)
 
-[node name="Camera2D" parent="Player" index="5"]
+[node name="Camera2D" parent="Player" index="6"]
 offset = Vector2(0, -67)
 
 [node name="EnemyCrab" parent="." index="2" node_paths=PackedStringArray("patrol_points") instance=ExtResource("2_18yri")]
