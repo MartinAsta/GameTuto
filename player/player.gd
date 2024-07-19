@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var shoot_timer = $ShootTimer
 @onready var muzzle_run : Marker2D = $MuzzleRun
 @onready var muzzle_stand : Marker2D = $MuzzleStand
+@onready var shoot_cooldown = $ShootCooldown
 
 @export var speed : int = 8500
 @export var jump : int = -350
@@ -21,7 +22,7 @@ func _ready():
 	current_state = State.Idle
 	muzzle_run_position = muzzle_run.position
 	muzzle_stand_position = muzzle_stand.position
-	#Engine.time_scale = 0.5
+	#Engine.time_scale = 0.6
 
 func _physics_process(delta : float):
 	player_falling(delta)
@@ -31,7 +32,7 @@ func _physics_process(delta : float):
 	player_shooting()
 	
 	move_and_slide()
-	
+	print(current_state)
 	player_animations()
 
 #PLAYER MOVEMENTS
@@ -57,22 +58,18 @@ func player_jump():
 		current_state = State.Jump
 
 func player_shooting():
-	if Input.is_action_pressed("shoot"):
+	if Input.is_action_pressed("shoot") :
 		if current_state == State.Run:
-			var bullet_instance = bullet.instantiate() as Node2D
-			bullet_instance.direction = input_movement()
-			bullet_instance.global_position = muzzle_run.global_position
-			get_parent().add_child(bullet_instance)
 			current_state = State.Shoot
-			shoot_timer.start()
+			if $ShootCooldown.is_stopped():
+				shoot(muzzle_run)
+				shoot_timer.start()
 			
-		elif current_state == State.Idle:
-			var bullet_instance = bullet.instantiate() as Node2D
-			bullet_instance.direction = -1 if player_sprite.flip_h else 1
-			bullet_instance.global_position = muzzle_stand.global_position
-			get_parent().add_child(bullet_instance)
+		elif input_movement() == 0 and is_on_floor():
 			current_state = State.Stand
-			shoot_timer.start()
+			if $ShootCooldown.is_stopped():
+				shoot(muzzle_stand)
+				shoot_timer.start()
 			
 func player_muzzle_position():
 	if !player_sprite.flip_h:
@@ -87,8 +84,11 @@ func input_movement() -> int:
 	return 1 if direction > 0 else -1 if direction < 0 else 0
 
 func player_idle():
-	if is_on_floor() and current_state != State.Shoot:
-		current_state = State.Idle
+	if is_on_floor() and current_state != State.Stand:
+		if !Input.is_action_pressed("shoot"):
+			current_state = State.Idle
+		else:
+			current_state = State.Stand
 
 #ANIMATIONS
 func player_animations():
@@ -103,7 +103,16 @@ func player_animations():
 			player_sprite.play("run_shoot")
 		State.Stand:
 			player_sprite.play("stand_shoot")
-
+			
+#ACTIONS
+func shoot(muzzle : Marker2D):
+	var bullet_instance = bullet.instantiate() as Node2D
+	bullet_instance.direction = -1 if player_sprite.flip_h else 1
+	bullet_instance.global_position = muzzle.global_position
+	get_parent().add_child(bullet_instance)
+	$ShootCooldown.start()
+	
+#TIMERS
 func _on_shoot_timer_timeout():
 	if current_state == State.Shoot:
 		current_state = State.Run

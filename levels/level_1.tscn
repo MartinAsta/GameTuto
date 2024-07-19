@@ -12,7 +12,7 @@ transform = Transform2D(1, 0, 0, 1, 0, -528)
 [node name="Player" parent="." index="1"]
 position = Vector2(24, -48)
 
-[node name="Camera2D" parent="Player" index="5"]
+[node name="Camera2D" parent="Player" index="6"]
 limit_left = -30
 limit_top = -360
 limit_right = 668

@@ -271,7 +271,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stand_shoot",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qmtsq"]
@@ -284,9 +284,9 @@ script = ExtResource("1_b6g6k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xn60")
-animation = &"stand_shoot"
+animation = &"run_shoot"
 autoplay = "idle"
-frame_progress = 0.567471
+frame_progress = 0.908484
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -295,12 +295,15 @@ shape = SubResource("CapsuleShape2D_qmtsq")
 
 [node name="ShootTimer" type="Timer" parent="."]
 wait_time = 0.5
-one_shot = true
 
 [node name="MuzzleRun" type="Marker2D" parent="."]
 position = Vector2(17, -26)
 
 [node name="MuzzleStand" type="Marker2D" parent="."]
-position = Vector2(18, -27)
+position = Vector2(20, -27)
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

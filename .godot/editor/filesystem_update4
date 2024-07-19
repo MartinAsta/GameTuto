@@ -1,3 +1,7 @@
+res://levels/level_1.tscn
+res://levels/test_levels/test_level.tscn
+res://levels/base_level.tscn
 res://player/player.tscn
-res://levels/level.tscn
+res://player/bullet.tscn
 res://player/player.gd
+res://player/bullet.gd

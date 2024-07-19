@@ -1,6 +1,6 @@
 extends AnimatedSprite2D
 
-var speed : int = 600
+var speed : int = 400
 var direction : int
 
 func _physics_process(delta):
