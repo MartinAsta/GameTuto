@@ -16,7 +16,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var current_state : State
 var muzzle_run_position
 var muzzle_stand_position
-var was_on_ground : bool
+var was_on_ground : bool = true
+var on_floor : bool = true
 
 enum State { Idle, Run, Jump, Shoot, Stand }
 
@@ -27,6 +28,7 @@ func _ready():
 	#Engine.time_scale = 0.6
 
 func _physics_process(delta : float):
+	on_floor = is_on_floor()
 	player_falling(delta)
 	player_run(delta)
 	player_jump()
@@ -39,14 +41,14 @@ func _physics_process(delta : float):
 
 #PLAYER MOVEMENTS
 func player_falling(delta : float):
-	if not is_on_floor():
+	if not on_floor:
 		velocity.y += gravity * delta
 
 func player_run(delta : float):
 	var direction = input_movement()
 	
 	if direction != 0:
-		if is_on_floor() and current_state != State.Shoot:
+		if on_floor and current_state != State.Shoot:
 			current_state = State.Run
 		player_sprite.flip_h = direction < 0
 		velocity.x = direction * speed * delta
@@ -55,23 +57,23 @@ func player_run(delta : float):
 		player_idle()
 
 func player_jump():
-	if Input.is_action_just_pressed("jump") and (is_on_floor() or !coyote_timer.is_stopped()):
+	if Input.is_action_just_pressed("jump") and (on_floor or !coyote_timer.is_stopped()):
 		velocity.y = jump
 		current_state = State.Jump
 
 func player_shooting():
-	if Input.is_action_pressed("shoot") :
+	if Input.is_action_pressed("shoot"):
 		if current_state == State.Run:
 			current_state = State.Shoot
-			if shoot_cooldown.is_stopped():
-				shoot(muzzle_run)
-				shoot_timer.start()
-			
-		elif input_movement() == 0 and is_on_floor():
+			try_shoot(muzzle_run)
+		elif input_movement() == 0 and on_floor:
 			current_state = State.Stand
-			if shoot_cooldown.is_stopped():
-				shoot(muzzle_stand)
-				shoot_timer.start()
+			try_shoot(muzzle_stand)
+
+func try_shoot(muzzle: Marker2D):
+	if shoot_cooldown.is_stopped():
+		shoot(muzzle)
+		shoot_timer.start()
 			
 func player_muzzle_position():
 	if !player_sprite.flip_h:
@@ -86,16 +88,16 @@ func input_movement() -> int:
 	return 1 if direction > 0 else -1 if direction < 0 else 0
 
 func player_idle():
-	if is_on_floor() and current_state != State.Stand:
+	if on_floor and current_state != State.Stand:
 		if !Input.is_action_pressed("shoot"):
 			current_state = State.Idle
 		else:
 			current_state = State.Stand
 
 func started_falling():
-	if was_on_ground and !is_on_floor() and !Input.is_action_just_pressed("jump"):
+	if was_on_ground and !on_floor and !Input.is_action_just_pressed("jump"):
 		coyote_timer.start()
-	was_on_ground = is_on_floor()
+	was_on_ground = on_floor
 
 #ANIMATIONS
 func player_animations():

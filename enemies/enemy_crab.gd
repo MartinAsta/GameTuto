@@ -2,6 +2,8 @@ extends CharacterBody2D
 @onready var crab_sprite = $AnimatedSprite2D
 @onready var idle_timer = $IdleTimer
 
+var death_effect = preload("res://enemies/enemy_death_effect.tscn")
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var current_state : State
 var direction : Vector2 = Vector2.LEFT
@@ -10,6 +12,8 @@ var point_positions : Array[Vector2]
 var current_point : Vector2
 var current_point_position : int
 var can_walk : bool = true
+var max_health : int = 15
+var health : int = max_health
 
 @export var speed : int = 1500
 @export var patrol_points : Node
@@ -81,5 +85,12 @@ func crab_animation():
 		crab_sprite.play("walk")
 
 
-func _on_hurtbox_area_entered(area):
-	print("Hurtbox area entered")
+func _on_hurtbox_area_entered(area : Area2D):
+	if area.get_parent().has_method("get_damage_amount"):
+		var node = area.get_parent() as Node
+		health -= node.damage_amount
+		if health <= 0:
+			var death_effect_instance = death_effect.instantiate() as Node2D
+			death_effect_instance.global_position = global_position
+			get_parent().add_child(death_effect_instance)
+			queue_free()
