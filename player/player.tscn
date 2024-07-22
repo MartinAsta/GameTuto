@@ -1,9 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://cila4qxtnleda"]
+[gd_scene load_steps=44 format=3 uid="uid://cila4qxtnleda"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_b6g6k"]
 [ext_resource type="Texture2D" uid="uid://ducq03xmmfwr7" path="res://player/player-idle.png" id="1_wsx1f"]
 [ext_resource type="Texture2D" uid="uid://d0fj04o20rn02" path="res://player/player-run.png" id="2_21i6j"]
+[ext_resource type="Texture2D" uid="uid://v103qyybsy73" path="res://player/player-duck.png" id="2_a1hn8"]
 [ext_resource type="Texture2D" uid="uid://4wp5taf8j8q6" path="res://player/player-jump.png" id="3_ge48c"]
+[ext_resource type="Texture2D" uid="uid://c42sl7hn0prby" path="res://player/player-duck_2.png" id="3_yfmuh"]
 [ext_resource type="Texture2D" uid="uid://bj62tjwqwv3et" path="res://player/player-run-shoot.png" id="5_q761m"]
 [ext_resource type="Texture2D" uid="uid://vrcecj3il3t7" path="res://player/player-stand.png" id="6_cj4hg"]
 
@@ -148,6 +150,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_a1hn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_yfmuh")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_w7q6i")
 }, {
 "duration": 1.0,
@@ -284,9 +297,9 @@ script = ExtResource("1_b6g6k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xn60")
-animation = &"run_shoot"
+animation = &"duck"
 autoplay = "idle"
-frame_progress = 0.226172
+frame_progress = 0.671622
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -294,7 +307,7 @@ position = Vector2(-1, -19)
 shape = SubResource("CapsuleShape2D_qmtsq")
 
 [node name="ShootTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.4
 
 [node name="MuzzleRun" type="Marker2D" parent="."]
 position = Vector2(17, -26)
@@ -304,6 +317,13 @@ position = Vector2(20, -27)
 
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.5
+one_shot = true
+
+[node name="MuzzleCrouch" type="Marker2D" parent="."]
+position = Vector2(19, -14)
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
 one_shot = true
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

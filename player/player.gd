@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var muzzle_run : Marker2D = $MuzzleRun
 @onready var muzzle_stand : Marker2D = $MuzzleStand
 @onready var shoot_cooldown = $ShootCooldown
+@onready var coyote_timer = $CoyoteTimer
 
 @export var speed : int = 8500
 @export var jump : int = -350
@@ -15,6 +16,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var current_state : State
 var muzzle_run_position
 var muzzle_stand_position
+var was_on_ground : bool
 
 enum State { Idle, Run, Jump, Shoot, Stand }
 
@@ -32,6 +34,7 @@ func _physics_process(delta : float):
 	player_shooting()
 	
 	move_and_slide()
+	started_falling()
 	player_animations()
 
 #PLAYER MOVEMENTS
@@ -52,7 +55,7 @@ func player_run(delta : float):
 		player_idle()
 
 func player_jump():
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or !coyote_timer.is_stopped()):
 		velocity.y = jump
 		current_state = State.Jump
 
@@ -60,13 +63,13 @@ func player_shooting():
 	if Input.is_action_pressed("shoot") :
 		if current_state == State.Run:
 			current_state = State.Shoot
-			if $ShootCooldown.is_stopped():
+			if shoot_cooldown.is_stopped():
 				shoot(muzzle_run)
 				shoot_timer.start()
 			
 		elif input_movement() == 0 and is_on_floor():
 			current_state = State.Stand
-			if $ShootCooldown.is_stopped():
+			if shoot_cooldown.is_stopped():
 				shoot(muzzle_stand)
 				shoot_timer.start()
 			
@@ -89,6 +92,11 @@ func player_idle():
 		else:
 			current_state = State.Stand
 
+func started_falling():
+	if was_on_ground and !is_on_floor() and !Input.is_action_just_pressed("jump"):
+		coyote_timer.start()
+	was_on_ground = is_on_floor()
+
 #ANIMATIONS
 func player_animations():
 	match current_state:
@@ -109,7 +117,7 @@ func shoot(muzzle : Marker2D):
 	bullet_instance.direction = -1 if player_sprite.flip_h else 1
 	bullet_instance.global_position = muzzle.global_position
 	get_parent().add_child(bullet_instance)
-	$ShootCooldown.start()
+	shoot_cooldown.start()
 	
 #TIMERS
 func _on_shoot_timer_timeout():

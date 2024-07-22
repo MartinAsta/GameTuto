@@ -11,9 +11,9 @@ offset = Vector2(0, -528)
 transform = Transform2D(1, 0, 0, 1, 0, -528)
 
 [node name="Player" parent="." index="1"]
-position = Vector2(24, -48)
+position = Vector2(29, -40)
 
-[node name="Camera2D" parent="Player" index="6"]
+[node name="Camera2D" parent="Player" index="8"]
 limit_left = -30
 limit_top = -360
 limit_right = 1300
