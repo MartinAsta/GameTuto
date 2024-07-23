@@ -151,12 +151,20 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_a1hn8")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_a1hn8")
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_yfmuh")
 }],
 "loop": true,
-"name": &"duck",
+"name": &"duck_shoot",
 "speed": 5.0
 }, {
 "frames": [{
@@ -299,7 +307,7 @@ script = ExtResource("1_b6g6k")
 sprite_frames = SubResource("SpriteFrames_0xn60")
 animation = &"duck"
 autoplay = "idle"
-frame_progress = 0.671622
+frame_progress = 0.539318
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -318,9 +326,6 @@ position = Vector2(20, -27)
 [node name="ShootCooldown" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-
-[node name="MuzzleCrouch" type="Marker2D" parent="."]
-position = Vector2(19, -14)
 
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.1

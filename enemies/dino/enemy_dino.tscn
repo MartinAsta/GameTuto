@@ -1,0 +1,129 @@
+[gd_scene load_steps=19 format=3 uid="uid://bmxfixe8qflsq"]
+
+[ext_resource type="Texture2D" uid="uid://b0nib4hlnh4t0" path="res://enemies/dino/dino-idle.png" id="1_2ij13"]
+[ext_resource type="Texture2D" uid="uid://dqtdbib78x5lm" path="res://enemies/dino/dino.png" id="1_bfchg"]
+[ext_resource type="Script" path="res://enemies/dino/Gravity.gd" id="3_ugl20"]
+[ext_resource type="Script" path="res://scripts/state_machine/node_finite_state_machine.gd" id="4_3oxxx"]
+[ext_resource type="Script" path="res://enemies/dino/idle_state.gd" id="5_kajbm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rugdk"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(0, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5as5"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(32, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bt7d"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(64, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rn82f"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(96, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idw45"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(128, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ha4o"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(160, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjawd"]
+atlas = ExtResource("1_bfchg")
+region = Rect2(192, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d43so"]
+atlas = ExtResource("1_2ij13")
+region = Rect2(0, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csvjy"]
+atlas = ExtResource("1_2ij13")
+region = Rect2(32, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2as3v"]
+atlas = ExtResource("1_2ij13")
+region = Rect2(64, 0, 32, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cjpf"]
+atlas = ExtResource("1_2ij13")
+region = Rect2(96, 0, 32, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c71po"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rugdk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5as5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bt7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rn82f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idw45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ha4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjawd")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 14.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d43so")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csvjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2as3v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cjpf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cwc6j"]
+
+[node name="enemy_dino" type="CharacterBody2D"]
+collision_layer = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -13)
+sprite_frames = SubResource("SpriteFrames_c71po")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.828345
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_cwc6j")
+
+[node name="Gravity" type="Node" parent="." node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("3_ugl20")
+character_body_2d = NodePath("..")
+animated_sprite_2d = NodePath("../AnimatedSprite2D")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("4_3oxxx")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_kajbm")

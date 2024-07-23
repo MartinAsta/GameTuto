@@ -1,7 +1,9 @@
-res://player
+res://scripts/state_machine
 res://scripts
+res://enemies/dino
+res://levels/test_levels
+res://enemies
+res://player
 res://levels
 res://background
 res://
-res://enemies
-res://levels/test_levels

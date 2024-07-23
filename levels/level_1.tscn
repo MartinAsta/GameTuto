@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://sben657e0nau" path="res://levels/base_level.tscn" id="1_yifv3"]
 [ext_resource type="PackedScene" uid="uid://cyfdnlwugvk1i" path="res://background/parallax_background.tscn" id="2_hfvhj"]
-[ext_resource type="PackedScene" uid="uid://bv2arh05dobny" path="res://enemies/enemy_crab.tscn" id="3_f6i4v"]
+[ext_resource type="PackedScene" uid="uid://bv2arh05dobny" path="res://enemies/crab/enemy_crab.tscn" id="3_0d5wd"]
 
 [node name="Level1" instance=ExtResource("1_yifv3")]
 
@@ -13,7 +13,7 @@ transform = Transform2D(1, 0, 0, 1, 0, -528)
 [node name="Player" parent="." index="1"]
 position = Vector2(29, -40)
 
-[node name="Camera2D" parent="Player" index="8"]
+[node name="Camera2D" parent="Player" index="7"]
 limit_left = -30
 limit_top = -360
 limit_right = 1300
@@ -28,15 +28,14 @@ layer_2/tile_data = PackedInt32Array(-196606, 65536, 6, -131070, 65536, 7, -6553
 
 [node name="Enemies" type="Node" parent="." index="3"]
 
-[node name="EnemyCrab" parent="Enemies" index="0" node_paths=PackedStringArray("patrol_points") instance=ExtResource("3_f6i4v")]
-position = Vector2(708, -181)
+[node name="EnemyCrab" parent="." index="4" node_paths=PackedStringArray("patrol_points") instance=ExtResource("3_0d5wd")]
+position = Vector2(707, -177)
 patrol_points = NodePath("PatrolPoints")
 
-[node name="PatrolPoints" type="Node2D" parent="Enemies/EnemyCrab" index="3"]
-position = Vector2(0, 1)
+[node name="PatrolPoints" type="Node" parent="EnemyCrab" index="4"]
 
-[node name="Point1" type="Marker2D" parent="Enemies/EnemyCrab/PatrolPoints" index="0"]
-position = Vector2(-305, 13)
+[node name="Point1" type="Marker2D" parent="EnemyCrab/PatrolPoints" index="0"]
+position = Vector2(402, -164)
 
-[node name="Point2" type="Marker2D" parent="Enemies/EnemyCrab/PatrolPoints" index="1"]
-position = Vector2(287, 13)
+[node name="Point2" type="Marker2D" parent="EnemyCrab/PatrolPoints" index="1"]
+position = Vector2(900, -164)

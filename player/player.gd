@@ -19,13 +19,13 @@ var muzzle_stand_position
 var was_on_ground : bool = true
 var on_floor : bool = true
 
-enum State { Idle, Run, Jump, Shoot, Stand }
+enum State { Idle, Run, Jump, Shoot, Stand, Duck}
 
 func _ready():
 	current_state = State.Idle
 	muzzle_run_position = muzzle_run.position
 	muzzle_stand_position = muzzle_stand.position
-	#Engine.time_scale = 0.6
+	#Engine.time_scale = 0.1
 
 func _physics_process(delta : float):
 	on_floor = is_on_floor()
@@ -55,6 +55,7 @@ func player_run(delta : float):
 	else:
 		velocity.x = move_toward(velocity.x, 0, 2 * speed * delta)
 		player_idle()
+		player_duck()
 
 func player_jump():
 	if Input.is_action_just_pressed("jump") and (on_floor or !coyote_timer.is_stopped()):
@@ -93,6 +94,10 @@ func player_idle():
 			current_state = State.Idle
 		else:
 			current_state = State.Stand
+			
+func player_duck():
+	if on_floor and current_state == State.Idle and Input.is_action_pressed("crouch"):
+		current_state = State.Duck
 
 func started_falling():
 	if was_on_ground and !on_floor and !Input.is_action_just_pressed("jump"):
@@ -112,6 +117,8 @@ func player_animations():
 			player_sprite.play("run_shoot")
 		State.Stand:
 			player_sprite.play("stand_shoot")
+		State.Duck:
+			player_sprite.play("duck")
 			
 #ACTIONS
 func shoot(muzzle : Marker2D):
