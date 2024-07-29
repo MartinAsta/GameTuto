@@ -134,3 +134,9 @@ func _on_shoot_timer_timeout():
 		current_state = State.Run
 	elif current_state == State.Stand:
 		current_state = State.Idle
+
+#SIGNALS
+func _on_hurtbox_body_entered(body : Node2D):
+	if body.is_in_group("Enemy"):
+		print(body.contact_damage)
+		HealthManager.decrease_health(body.contact_damage)

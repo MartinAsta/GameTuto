@@ -14,6 +14,7 @@ var current_point_position : int
 var can_walk : bool = true
 var max_health : int = 15
 var health : int = max_health
+var contact_damage : int = 1
 
 @export var speed : int = 1500
 @export var patrol_points : Node

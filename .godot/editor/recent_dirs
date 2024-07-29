@@ -1,5 +1,6 @@
-res://scripts/state_machine
+res://ui/health_bar
 res://scripts
+res://scripts/state_machine
 res://enemies/dino
 res://levels/test_levels
 res://enemies

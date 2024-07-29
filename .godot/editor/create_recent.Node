@@ -1,11 +1,12 @@
+CanvasLayer
+Sprite2D
+Marker2D
 Node
 CollisionShape2D
+Area2D
 AnimatedSprite2D
-Marker2D
 CharacterBody2D
 Timer
-Area2D
-Sprite2D
 ParallaxLayer
 ParallaxBackground
 Node2D

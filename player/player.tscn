@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cila4qxtnleda"]
+[gd_scene load_steps=45 format=3 uid="uid://cila4qxtnleda"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_b6g6k"]
 [ext_resource type="Texture2D" uid="uid://ducq03xmmfwr7" path="res://player/player-idle.png" id="1_wsx1f"]
@@ -299,15 +299,18 @@ animations = [{
 radius = 8.0
 height = 38.0
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cyg8t"]
+radius = 9.0
+height = 38.0
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_b6g6k")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xn60")
-animation = &"duck"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.539318
 offset = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -331,4 +334,14 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="HurtboxCollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-1, -21)
+shape = SubResource("CapsuleShape2D_cyg8t")
+debug_color = Color(0.907528, 0.000119364, 0.739747, 0.42)
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

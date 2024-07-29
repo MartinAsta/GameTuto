@@ -13,7 +13,8 @@ func _on_timer_timeout():
 	queue_free()
 
 func _on_hitbox_area_entered(area):
-	bullet_impact()
+	if !area.is_in_group("AggroRange"):
+		bullet_impact()
 
 func _on_hitbox_body_entered(body):
 	bullet_impact()

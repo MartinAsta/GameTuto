@@ -1,10 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://bmxfixe8qflsq"]
+[gd_scene load_steps=23 format=3 uid="uid://bmxfixe8qflsq"]
 
 [ext_resource type="Texture2D" uid="uid://b0nib4hlnh4t0" path="res://enemies/dino/dino-idle.png" id="1_2ij13"]
+[ext_resource type="Script" path="res://enemies/dino/enemy_dino.gd" id="1_bbd0v"]
 [ext_resource type="Texture2D" uid="uid://dqtdbib78x5lm" path="res://enemies/dino/dino.png" id="1_bfchg"]
 [ext_resource type="Script" path="res://enemies/dino/Gravity.gd" id="3_ugl20"]
 [ext_resource type="Script" path="res://scripts/state_machine/node_finite_state_machine.gd" id="4_3oxxx"]
+[ext_resource type="Script" path="res://enemies/dino/state_machine_controller.gd" id="4_e0td0"]
 [ext_resource type="Script" path="res://enemies/dino/idle_state.gd" id="5_kajbm"]
+[ext_resource type="Script" path="res://enemies/dino/attack_state.gd" id="6_87vig"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rugdk"]
 atlas = ExtResource("1_bfchg")
@@ -103,8 +106,12 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cwc6j"]
 
-[node name="enemy_dino" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_flblq"]
+radius = 199.04
+
+[node name="enemy_dino" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
+script = ExtResource("1_bbd0v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -13)
@@ -122,8 +129,34 @@ script = ExtResource("3_ugl20")
 character_body_2d = NodePath("..")
 animated_sprite_2d = NodePath("../AnimatedSprite2D")
 
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource("4_3oxxx")
+[node name="StateMachineController" type="Node" parent="." node_paths=PackedStringArray("node_finite_state_machine")]
+script = ExtResource("4_e0td0")
+node_finite_state_machine = NodePath("../StateMachine")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("4_3oxxx")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
 script = ExtResource("5_kajbm")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+slow_down_speed = 150
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("6_87vig")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+speed = 75
+
+[node name="AttackArea2D" type="Area2D" parent="." groups=["AggroRange"]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea2D"]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_flblq")
+debug_color = Color(0.830665, 0.392868, 5.77569e-07, 0.42)
+
+[connection signal="body_entered" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_entered"]
+[connection signal="body_exited" from="AttackArea2D" to="StateMachineController" method="_on_attack_area_2d_body_exited"]
