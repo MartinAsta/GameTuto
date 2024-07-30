@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var muzzle_stand : Marker2D = $MuzzleStand
 @onready var shoot_cooldown = $ShootCooldown
 @onready var coyote_timer = $CoyoteTimer
+@onready var hit_animation_player = $HitAnimationPlayer
 
 @export var speed : int = 8500
 @export var jump : int = -350
@@ -138,5 +139,5 @@ func _on_shoot_timer_timeout():
 #SIGNALS
 func _on_hurtbox_body_entered(body : Node2D):
 	if body.is_in_group("Enemy"):
-		print(body.contact_damage)
+		hit_animation_player.play("hit")
 		HealthManager.decrease_health(body.contact_damage)

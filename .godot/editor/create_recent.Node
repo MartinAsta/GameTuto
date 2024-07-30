@@ -1,14 +1,15 @@
+GPUParticles2D
+AnimatedSprite2D
+AnimationPlayer
 CanvasLayer
 Sprite2D
 Marker2D
 Node
 CollisionShape2D
 Area2D
-AnimatedSprite2D
 CharacterBody2D
 Timer
 ParallaxLayer
 ParallaxBackground
 Node2D
 Camera2D
-TileMap
