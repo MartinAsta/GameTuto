@@ -13,13 +13,6 @@ transform = Transform2D(1, 0, 0, 1, 0, -528)
 [node name="Player" parent="." index="1"]
 position = Vector2(29, -40)
 
-[node name="Camera2D" parent="Player" index="8"]
-limit_left = -30
-limit_top = -360
-limit_right = 1300
-limit_bottom = 0
-editor_draw_limits = true
-
 [node name="TileMap" parent="." index="2"]
 position = Vector2(1, 0)
 layer_0/tile_data = PackedInt32Array(-262141, 1441792, 8, -196605, 1441792, 9, -262140, 1376256, 8, -196604, 1376256, 9, -262139, 1441792, 8, -196603, 1441792, 9, -393213, 1376256, 8, -327677, 1376256, 9, -393212, 1441792, 8, -327676, 1441792, 9, -262142, 1376256, 8, -196606, 1376256, 9)

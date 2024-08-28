@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://sben657e0nau"]
+[gd_scene load_steps=10 format=3 uid="uid://sben657e0nau"]
 
 [ext_resource type="Texture2D" uid="uid://cjsgebsuvuh0c" path="res://tileset/game_tilesets_1.png" id="1_1ofj5"]
 [ext_resource type="PackedScene" uid="uid://cila4qxtnleda" path="res://player/player.tscn" id="2_q4frh"]
 [ext_resource type="Texture2D" uid="uid://cbvneiusfgtl6" path="res://tileset/props.png" id="3_jfi3u"]
 [ext_resource type="Texture2D" uid="uid://cqynrhkn0oft0" path="res://tileset/walls.png" id="4_thqho"]
+[ext_resource type="Script" path="res://player/player_camera.gd" id="5_jqg8w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8rrvi"]
 texture = ExtResource("1_1ofj5")
@@ -760,10 +761,6 @@ sources/2 = SubResource("TileSetAtlasSource_3p02k")
 [node name="Player" parent="." instance=ExtResource("2_q4frh")]
 position = Vector2(-216, -17)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_witu8")
 format = 2
@@ -774,3 +771,11 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "Foreground"
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array()
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(-216, -17)
+offset = Vector2(0, -40)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("5_jqg8w")
+player = NodePath("../Player")

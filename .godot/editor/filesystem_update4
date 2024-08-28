@@ -1,11 +1,12 @@
-res://levels/level_1.tscn
+res://player/player_hit_flash_shader.tres
+res://pickups/health_pickup/health_pickup.gd
+res://pickups/health_pickup/health_pickup.tscn
 res://levels/test_levels/test_level.tscn
+res://levels/level_1.tscn
 res://levels/base_level.tscn
 res://player/player.tscn
 res://enemies/crab/enemy_crab.tscn
-res://ui/health_bar/health_bar.tscn
 res://enemies/dino/enemy_dino.tscn
-res://ui/GameScreen.tscn
-res://player/player_hit_flash_shader.tres
-res://player/player.gd
 res://player/player_death_effect/player_death_effect.tscn
+res://collectibles/blue_coin/blue_coin.gd
+res://collectibles/blue_coin/blue_coin.tscn
